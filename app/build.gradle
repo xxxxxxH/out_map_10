@@ -1,0 +1,49 @@
+plugins {
+    id 'com.android.application'
+    id 'kotlin-android'
+    id 'kotlin-android-extensions'
+}
+
+android {
+    compileSdkVersion 30
+    buildToolsVersion '30.0.3'
+
+    defaultConfig {
+        applicationId "com.cctv.xh"
+        minSdkVersion 27
+        targetSdkVersion 30
+        versionCode 1
+        versionName "1.0"
+
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+    kotlinOptions {
+        jvmTarget = '1.8'
+    }
+}
+
+dependencies {
+    implementation 'androidx.appcompat:appcompat:1.3.0'
+    implementation 'com.google.android.material:material:1.4.0'
+
+    implementation(project(":libbbbbb"))
+    implementation 'androidx.constraintlayout:constraintlayout:2.0.4'
+    implementation 'com.github.qiugang:Thunder:v0.1'
+    implementation 'com.github.teambition:AutoRecyclerAdapter:v1.5'
+    implementation 'com.alibaba:fastjson:1.2.76'
+    implementation 'com.gjiazhe:PanoramaImageView:1.0'
+    implementation 'com.cleveroad:fan-layout-manager:1.0.5'
+    implementation 'com.github.jetradarmobile:android-snowfall:1.2.1'
+    implementation 'com.7heaven.widgets:segmentcontrol:1.17'
+}

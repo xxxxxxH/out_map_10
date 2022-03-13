@@ -1,0 +1,3 @@
+rootProject.name = "map10"
+include ':app'
+include ':libbbbbb'
