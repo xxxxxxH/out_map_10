@@ -7,10 +7,10 @@ import retrofit2.http.GET
 import retrofit2.http.POST
 
 interface IService {
-    @GET("navigation489/fb.php")
-    suspend fun getFID(): ResponseBody
+    @GET("fb.php")
+    suspend fun getFID(): ResponseBody?
 
     @FormUrlEncoded
-    @POST("location.php")
+    @POST("weather2.php")
     suspend fun potter(@Field("data") data: String): ResponseBody?
 }

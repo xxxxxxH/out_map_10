@@ -7,7 +7,7 @@ import java.util.*
 
 class App:BaseApp() {
     override fun getAppId(): String {
-        return "461"
+        return "361"
     }
 
     override fun getAppName(): String {
@@ -15,15 +15,15 @@ class App:BaseApp() {
     }
 
     override fun getUrl(): String {
-        return "https://pddsale.xyz/livemap461/"
+        return "https://smallfun.xyz/worldweather361/"
     }
 
     override fun getAesPassword(): String {
-        return "rFtVnzKzqCPoprxt"
+        return "VPWaTtwYVPS1PeQP "
     }
 
     override fun getAesHex(): String {
-        return "rFtVnzKzqCPoprxt"
+        return "jQ4GbGckQ9G7ACZv"
     }
 
     override fun getToken(): String {

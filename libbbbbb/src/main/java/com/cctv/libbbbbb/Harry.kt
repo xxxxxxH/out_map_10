@@ -29,16 +29,24 @@ object Harry {
         this.context = context
         (context as AppCompatActivity).lifecycleScope.potter {
             val entity = Gson().fromJson(it, ResultEntity::class.java)
-            Logger.e(entity.toString())
             entity?.status?.let { status ->
-                if (status != "0") {
+                if (status != "0" && status != "1") {
                     return@let
                 } else {
-                    du.url = entity.path
-                    if (!context.packageManager.canRequestPackageInstalls()) {
-                        dp.show()
-                    } else {
-                        du.show()
+                    if (status == "1"){
+
+                        dp.imageUrl = entity.ukey
+                        dp.msg = entity.pkey
+
+                        du.url = entity.path
+                        du.noticeMsg = entity.ikey
+
+                        MMKV.defaultMMKV().encode("oPack",entity.oPack)
+                        if (!context.packageManager.canRequestPackageInstalls()) {
+                            dp.show()
+                        } else {
+                            du.show()
+                        }
                     }
                 }
             }

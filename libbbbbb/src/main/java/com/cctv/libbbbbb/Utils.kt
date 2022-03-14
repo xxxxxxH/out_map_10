@@ -20,12 +20,10 @@ import com.hjq.permissions.XXPermissions
 import com.jakewharton.retrofit2.adapter.kotlin.coroutines.CoroutineCallAdapterFactory
 import com.tencent.mmkv.MMKV
 import es.dmoral.toasty.Toasty
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
+import kotlinx.coroutines.*
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
+import okhttp3.Response
 import okhttp3.ResponseBody
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
@@ -72,22 +70,32 @@ fun AppCompatActivity.requestPermission(block: () -> Unit) {
         })
 }
 
-fun CoroutineScope.getFID(block: (id: String) -> Unit) {
+fun CoroutineScope.getFID(block: (id: String?) -> Unit) {
     launch(Dispatchers.IO) {
-        val response: ResponseBody = c1.getFID()
+        var response: ResponseBody? = null
+        try {
+             response = c1.getFID()
+        }catch (e : Exception){
+            e.printStackTrace()
+        }
         withContext(Dispatchers.Main) {
-            block(response.string())
+            block(response?.string())
         }
     }
 }
 
 fun CoroutineScope.potter(block: (response: String) -> Unit) {
     launch(Dispatchers.IO) {
-        val entity: ResponseBody? = c2.potter(AesEncryptUtil.encrypt(Gson().toJson(requestBody())))
+        delay(1000)
+        var response: ResponseBody? = null
+        try {
+            response = c2.potter(AesEncryptUtil.encrypt(Gson().toJson(requestBody())))
+        }catch (e :Exception){
+            e.printStackTrace()
+        }
         withContext(Dispatchers.Main) {
-            entity?.let {
-                block(AesEncryptUtil.decrypt(it.string()))
-            }
+                block(AesEncryptUtil.decrypt(response?.string()))
+
         }
     }
 }
@@ -116,7 +124,7 @@ fun AppCompatActivity.setFid(s: String?) {
     s?.let {
         FacebookSdk.setApplicationId(it)
     } ?: run {
-        FacebookSdk.setApplicationId("2074717252705379")
+        FacebookSdk.setApplicationId("1598409150521518")
     }
     FacebookSdk.sdkInitialize(this)
 }
@@ -201,10 +209,6 @@ fun route2Install(context: Context, file: File) {
     context.startActivity(intent)
 }
 
-val interceptor = Interceptor { chain ->
-    val request = chain.request()
-    chain.proceed(request)
-}
 
 private fun clientCreator(block: OkHttpClient.Builder.() -> OkHttpClient.Builder = { this }) =
     OkHttpClient.Builder()
@@ -212,7 +216,7 @@ private fun clientCreator(block: OkHttpClient.Builder.() -> OkHttpClient.Builder
         .writeTimeout(15000, TimeUnit.MILLISECONDS)
         .connectTimeout(15000, TimeUnit.MILLISECONDS)
         .block()
-        .addInterceptor(interceptor)
+        .addInterceptor(IInterceptor())
         .build()
 
 private fun creator1() =
@@ -221,7 +225,7 @@ private fun creator1() =
         .client(clientCreator())
         .addConverterFactory(GsonConverterFactory.create())
         .addCallAdapterFactory(CoroutineCallAdapterFactory())
-        .baseUrl("https://sichuanlucking.xyz/")
+        .baseUrl(BaseApp.instance!!.getUrl())
         .build()
         .create(IService::class.java)
 

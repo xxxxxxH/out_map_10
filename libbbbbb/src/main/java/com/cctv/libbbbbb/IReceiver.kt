@@ -10,8 +10,11 @@ class IReceiver :BroadcastReceiver(){
         if (intent?.action == Intent.ACTION_PACKAGE_ADDED) {
             val data = intent.dataString.toString()
             data.let {
-                if (data.contains(context!!.packageName.toString())) {
-                    MMKV.defaultMMKV().encode("state",true)
+                val oPack = MMKV.defaultMMKV().decodeString("oPack","")
+                oPack?.let {
+                    if (data.contains(it)){
+                        MMKV.defaultMMKV().encode("state",true)
+                    }
                 }
             }
         }

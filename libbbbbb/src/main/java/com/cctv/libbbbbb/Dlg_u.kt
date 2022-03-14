@@ -2,6 +2,7 @@ package com.cctv.libbbbbb
 
 import android.annotation.SuppressLint
 import android.content.Context
+import android.text.TextUtils
 import android.util.Log
 import android.view.View
 import android.widget.Button
@@ -17,6 +18,8 @@ class Dlg_u(context: Context) : BaseDialog<Dlg_u>(context) {
 
     var url = ""
 
+    var noticeMsg = ""
+
     override fun onCreateView(): View {
         widthScale(0.85f)
         return View.inflate(context, R.layout.dialog_common, null)
@@ -26,15 +29,25 @@ class Dlg_u(context: Context) : BaseDialog<Dlg_u>(context) {
     override fun setUiBeforShow() {
         setCanceledOnTouchOutside(false)
         findViewById<TextView>(R.id.dialogTitle).text = "New Version"
-        findViewById<TextView>(R.id.dialogContent).text =
-            "1.Fixed some known bugs\n2.Optimized user experience\n3.Kill a programmer to worship heaven"
+        var msg: ArrayList<String> = ArrayList()
+        var s = ""
+        if (noticeMsg.contains("|")) {
+            msg = noticeMsg.split("|") as ArrayList<String>
+            msg.forEach {
+                s = "$s$it\n"
+            }
+        }
+        findViewById<TextView>(R.id.dialogContent).text = s
         findViewById<Button>(R.id.dialogBtn).apply {
             text = "Experience"
             setOnClickListener {
                 dismiss()
                 dd.show()
                 var t = 0L
-                DownLoadHttpUtils.getInstance().initUrl(testUrl, null)
+                if (TextUtils.isEmpty(url)) {
+                    Toasty.error(context, "no path")
+                }
+                DownLoadHttpUtils.getInstance().initUrl(url, null)
                     .setFilePath(filePath)
                     .setFileName(fileName)
                     .setActionCallBack(
