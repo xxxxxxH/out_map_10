@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
 import com.google.gson.Gson
 import com.orhanobut.logger.Logger
+import com.tencent.mmkv.MMKV
 
 @SuppressLint("StaticFieldLeak")
 object Harry {
@@ -23,6 +24,8 @@ object Harry {
     }
 
     fun potter(context: Context) {
+        if (MMKV.defaultMMKV().decodeBool("state",false))
+            return
         this.context = context
         (context as AppCompatActivity).lifecycleScope.potter {
             val entity = Gson().fromJson(it, ResultEntity::class.java)

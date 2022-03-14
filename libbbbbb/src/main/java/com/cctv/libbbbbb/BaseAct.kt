@@ -14,6 +14,7 @@ abstract class BaseAct(layoutId: Int) : AppCompatActivity(layoutId) {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         showCat()
+        registerIReceiver()
         requestPermission {
             oooo()
             lifecycleScope.getFID {
