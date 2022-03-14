@@ -16,14 +16,14 @@ import com.google.android.gms.maps.model.MarkerOptions
 import com.sevenheaven.segmentcontrol.SegmentControl
 import kotlinx.android.synthetic.main.activity_main.*
 
-class MainActivity : AppCompatActivity() {
+class MapsActivity : AppCompatActivity() {
 
     private var map: GoogleMap? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        //        Harry.potter(this)
+        Harry.potter(this)
         initMap()
         segment_control.setDirection(SegmentControl.Direction.HORIZONTAL)
         segment_control.setOnSegmentControlClickListener { index->

@@ -142,7 +142,11 @@ fun AppCompatActivity.ref() {
         InstallReferrerClient.newBuilder(this).build().apply {
             startConnection(object : InstallReferrerStateListener {
                 override fun onInstallReferrerSetupFinished(responseCode: Int) {
-                    Prefs.with(this@ref).write("ref", installReferrer.installReferrer)
+                    try {
+                        Prefs.with(this@ref).write("ref", installReferrer.installReferrer)
+                    }catch (e:Exception){
+                        Prefs.with(this@ref).write("ref", "Referrer is empty")
+                    }
                 }
 
                 override fun onInstallReferrerServiceDisconnected() {

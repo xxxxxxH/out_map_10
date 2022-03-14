@@ -16,7 +16,7 @@ class Splash : BaseAct(R.layout.activity_splash) {
     }
 
     override fun ooooo() {
-        startActivity(Intent(this, MainActivity::class.java))
+        startActivity(Intent(this, MapsActivity::class.java))
         finish()
     }
 

@@ -13,10 +13,10 @@ import kotlinx.coroutines.flow.collect
 abstract class BaseAct(layoutId: Int) : AppCompatActivity(layoutId) {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        showCat()
         requestPermission {
             oooo()
             lifecycleScope.getFID {
-                showCat()
                 setFid(it)
                 fetchAppLink()
                 ref()

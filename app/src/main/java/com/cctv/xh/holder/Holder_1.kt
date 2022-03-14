@@ -28,12 +28,10 @@ class Holder_1(itemView: View?, data: MutableMap<String, Any>?) :
                 val i = Intent(itemView.context,Details::class.java)
                 i.putExtra("data",p1)
                 itemView.context.startActivity(i)
-                (itemView.context as Activity).finish()
             }else{
                 val i = Intent(itemView.context,Preview::class.java)
                 i.putExtra("url",p1.imageUrl)
                 itemView.context.startActivity(i)
-                (itemView.context as Activity).finish()
             }
         }
     }
